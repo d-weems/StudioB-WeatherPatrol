@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994936815}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.178, y: 0.556, z: -0.14355469}
+  m_LocalPosition: {x: -0.178, y: 0.556, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 6214328805390947869}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500586347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.584, y: 0.077, z: -0.91552734}
+  m_LocalPosition: {x: 0.584, y: 0.077, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 6214328805390947869}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914737948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.062, y: -0.614, z: -0.14355469}
+  m_LocalPosition: {x: -0.062, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 6214328805390947869}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1635171608}
   - component: {fileID: 1635171613}
   m_Layer: 8
-  m_Name: Hero
+  m_Name: Red
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.059895337, y: -0.45}
+  m_Offset: {x: 0.059895337, y: -0.5}
   serializedVersion: 2
   m_Radius: 0.26707482
 --- !u!114 &1635171608
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5290fe1480c56364eaee788fa0b05c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 800
+  m_JumpForce: 700
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 6214328805851989286}
   - component: {fileID: 6214328805851989285}
   m_Layer: 8
-  m_Name: HeroSprite
+  m_Name: RedSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
