@@ -214,34 +214,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 994936816, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1500586348, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1635171608, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_JumpForce
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 1635171610, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1914737949, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1914737949, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.7
-      objectReference: {fileID: 0}
     - target: {fileID: 6214328805390947866, guid: a45c567b2f3f54e81b76ce2d46b9d636,
         type: 3}
       propertyPath: m_Name
-      value: Hero
+      value: Red
       objectReference: {fileID: 0}
     - target: {fileID: 6214328805390947869, guid: a45c567b2f3f54e81b76ce2d46b9d636,
         type: 3}
