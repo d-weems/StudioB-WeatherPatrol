@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1635171609, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6214328805390947866, guid: a45c567b2f3f54e81b76ce2d46b9d636,
         type: 3}
       propertyPath: m_Name
@@ -322,6 +326,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6214328805851989285, guid: a45c567b2f3f54e81b76ce2d46b9d636,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a45c567b2f3f54e81b76ce2d46b9d636, type: 3}
 --- !u!1 &536049009 stripped
@@ -330,8 +339,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 536049007}
   m_PrefabAsset: {fileID: 0}
---- !u!232 &536049012
-DistanceJoint2D:
+--- !u!233 &536049010
+HingeJoint2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -339,16 +348,21 @@ DistanceJoint2D:
   m_GameObject: {fileID: 536049009}
   m_Enabled: 0
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0.5}
-  m_ConnectedAnchor: {x: -1.1398582, y: -0.085489616}
-  m_AutoConfigureDistance: 0
-  m_Distance: 0.9
-  m_MaxDistanceOnly: 1
+  m_Anchor: {x: 0, y: 0.75}
+  m_ConnectedAnchor: {x: -2.69, y: -0.5899999}
+  m_UseMotor: 1
+  m_Motor:
+    m_MotorSpeed: 200
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 1
+  m_AngleLimits:
+    m_LowerAngle: -45
+    m_UpperAngle: 45
 --- !u!1 &710566329
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +390,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710566329}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -464,7 +478,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

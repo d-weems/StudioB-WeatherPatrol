@@ -4,7 +4,6 @@ using System.Collections;
 public class CharacterController2D : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
-	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsGround;
@@ -12,7 +11,6 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Transform m_FrontCheck;
-	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
 
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
@@ -20,7 +18,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_TouchingFront;
 	const float k_FrontRadius = .2f;
 	private Rigidbody2D m_Rigidbody2D;
-	private DistanceJoint2D m_DistanceJoint2D;
+	private HingeJoint2D m_HingeJoint2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private bool m_WallSliding = false;
 	public float k_WallSlideSpeed;
@@ -36,7 +34,7 @@ public class CharacterController2D : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
-		m_DistanceJoint2D = GetComponent<DistanceJoint2D>();
+		m_HingeJoint2D = GetComponent<HingeJoint2D>();
 	}
 
 
@@ -77,38 +75,11 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool jump)
 	{
-		// // If crouching, check to see if the character can stand up
-		// if (!crouch)
-		// {
-		// 	// If the character has a ceiling preventing them from standing up, keep them crouching
-		// 	if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-		// 	{
-		// 		crouch = true;
-		// 	}
-		// }
-
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
 		{
-
-			// // If crouching
-			// if (crouch)
-			// {
-			// 	// Reduce the speed by the crouchSpeed multiplier
-			// 	move *= m_CrouchSpeed;
-
-			// 	// Disable one of the colliders when crouching
-			// 	if (m_CrouchDisableCollider != null)
-			// 		m_CrouchDisableCollider.enabled = false;
-			// } else
-			// {
-			// 	// Enable the collider when not crouching
-			// 	if (m_CrouchDisableCollider != null)
-			// 		m_CrouchDisableCollider.enabled = true;
-			// }
-
 			// Move the character by finding the target velocity
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
@@ -135,10 +106,46 @@ public class CharacterController2D : MonoBehaviour
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 		}
 
+		CheckWallJump(move, jump);
+		CheckHookSwing(move, jump);
+		
+	}
+
+	private void CheckHookSwing(float move, bool jump)
+	{
+		if(!m_Grounded && m_CanSwing && Input.GetKey(KeyCode.J))
+		{
+			m_HingeJoint2D.enabled = true;
+			m_HingeJoint2D.connectedBody = m_SwingPoint.GetComponent<Rigidbody2D>();
+			m_HingeJoint2D.connectedAnchor = new Vector2(0.0f, 0.0f);
+			m_Rigidbody2D.freezeRotation= false;
+			m_IsSwinging = true;
+		}
+
+		if(m_IsSwinging && Input.GetKey(KeyCode.J))
+		{
+			if(m_HingeJoint2D.jointAngle >= m_HingeJoint2D.limits.max || m_HingeJoint2D.jointAngle <= m_HingeJoint2D.limits.min)
+			{
+				JointMotor2D motor = m_HingeJoint2D.motor;
+				motor.motorSpeed *= -1;
+				m_HingeJoint2D.motor = motor;
+			}
+		}
+
+		if(m_IsSwinging && !Input.GetKey(KeyCode.J))
+		{
+			m_HingeJoint2D.enabled = false;
+			m_Rigidbody2D.rotation = 0.0f;
+			m_Rigidbody2D.freezeRotation= true;
+			m_IsSwinging = false;
+		}
+	}
+
+	private void CheckWallJump(float move, bool jump)
+	{
 		// New WallJumping Tech //
 		if (m_TouchingFront && !m_Grounded && move != 0)
 		{
-			
 			m_WallSliding = true;
 		}
 		else
@@ -161,19 +168,6 @@ public class CharacterController2D : MonoBehaviour
 		{
 			Vector3 targetVelocity = new Vector2(m_xWallForce * -move * 10f, m_yWallForce);
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
-		}
-
-		if(!m_Grounded && m_CanSwing && Input.GetKey(KeyCode.J))
-		{
-			m_DistanceJoint2D.enabled = true;
-			m_DistanceJoint2D.connectedBody = m_SwingPoint.GetComponent<Rigidbody2D>();
-			m_DistanceJoint2D.connectedAnchor = new Vector2(0.0f, 0.0f);
-			m_IsSwinging = true;
-		}
-
-		if(m_IsSwinging && !Input.GetKey(KeyCode.J))
-		{
-			m_DistanceJoint2D.enabled = false;
 		}
 	}
 
