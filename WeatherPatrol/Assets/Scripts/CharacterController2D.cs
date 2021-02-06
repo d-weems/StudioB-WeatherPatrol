@@ -14,10 +14,10 @@ public class CharacterController2D : MonoBehaviour
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+
 	private bool m_TouchingFront;
 	const float k_FrontRadius = .2f;
 	private Rigidbody2D m_Rigidbody2D;
-	private HingeJoint2D m_HingeJoint2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private bool m_WallSliding = false;
 	public float k_WallSlideSpeed;
@@ -25,6 +25,7 @@ public class CharacterController2D : MonoBehaviour
 	public float m_xWallForce;
 	public float m_yWallForce;
 	public float m_WallJumpTime;
+
 	private Vector3 velocity = Vector3.zero;
 
 	private void Awake()
