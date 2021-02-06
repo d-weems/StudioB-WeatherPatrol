@@ -7,7 +7,6 @@ public class CharacterController2D : MonoBehaviour
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsGround;
-	[SerializeField] private LayerMask m_WhatIsSwingable;							// A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Transform m_FrontCheck;
@@ -26,15 +25,11 @@ public class CharacterController2D : MonoBehaviour
 	public float m_xWallForce;
 	public float m_yWallForce;
 	public float m_WallJumpTime;
-	private bool m_CanSwing = false;
-	private bool m_IsSwinging = false;
-	private GameObject m_SwingPoint;
 	private Vector3 velocity = Vector3.zero;
 
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
-		m_HingeJoint2D = GetComponent<HingeJoint2D>();
 	}
 
 
@@ -59,18 +54,6 @@ public class CharacterController2D : MonoBehaviour
 		{
 			if (frontColliders[i].gameObject != gameObject)
 				m_TouchingFront = true;
-		}
-
-		// Check for swing points slightly above the player
-		m_CanSwing = false;
-		m_SwingPoint = null;
-
-		Collider2D[] headColliders = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsSwingable);
-		for (int i = 0; i < headColliders.Length; i++)
-		{
-			if (headColliders[i].gameObject != gameObject)
-				m_CanSwing = true;
-				m_SwingPoint = headColliders[i].gameObject;
 		}
 	}
 
@@ -107,38 +90,6 @@ public class CharacterController2D : MonoBehaviour
 		}
 
 		CheckWallJump(move, jump);
-		CheckHookSwing(move, jump);
-		
-	}
-
-	private void CheckHookSwing(float move, bool jump)
-	{
-		if(!m_Grounded && m_CanSwing && Input.GetKey(KeyCode.J))
-		{
-			m_HingeJoint2D.enabled = true;
-			m_HingeJoint2D.connectedBody = m_SwingPoint.GetComponent<Rigidbody2D>();
-			m_HingeJoint2D.connectedAnchor = new Vector2(0.0f, 0.0f);
-			m_Rigidbody2D.freezeRotation= false;
-			m_IsSwinging = true;
-		}
-
-		if(m_IsSwinging && Input.GetKey(KeyCode.J))
-		{
-			if(m_HingeJoint2D.jointAngle >= m_HingeJoint2D.limits.max || m_HingeJoint2D.jointAngle <= m_HingeJoint2D.limits.min)
-			{
-				JointMotor2D motor = m_HingeJoint2D.motor;
-				motor.motorSpeed *= -1;
-				m_HingeJoint2D.motor = motor;
-			}
-		}
-
-		if(m_IsSwinging && !Input.GetKey(KeyCode.J))
-		{
-			m_HingeJoint2D.enabled = false;
-			m_Rigidbody2D.rotation = 0.0f;
-			m_Rigidbody2D.freezeRotation= true;
-			m_IsSwinging = false;
-		}
 	}
 
 	private void CheckWallJump(float move, bool jump)

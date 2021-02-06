@@ -105,8 +105,7 @@ GameObject:
   - component: {fileID: 1635171610}
   - component: {fileID: 1635171608}
   - component: {fileID: 1635171613}
-  - component: {fileID: 536049010}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Red
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -235,9 +234,6 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1
-  m_WhatIsSwingable:
-    serializedVersion: 2
-    m_Bits: 256
   m_GroundCheck: {fileID: 1914737949}
   m_CeilingCheck: {fileID: 994936816}
   m_FrontCheck: {fileID: 1500586348}
@@ -259,30 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1635171608}
   runSpeed: 40
---- !u!233 &536049010
-HingeJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6214328805390947866}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0.75}
-  m_ConnectedAnchor: {x: -2.69, y: -0.5899999}
-  m_UseMotor: 1
-  m_Motor:
-    m_MotorSpeed: 200
-    m_MaximumMotorForce: 10000
-  m_UseLimits: 1
-  m_AngleLimits:
-    m_LowerAngle: -45
-    m_UpperAngle: 45
 --- !u!1 &6214328805851989287
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6214328805851989286}
   - component: {fileID: 6214328805851989285}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RedSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
